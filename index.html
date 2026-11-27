@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0625"><meta name="description" content="DC — Danny Champion. Badilisha Mood Yako.">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg">
+<title>DC — Danny Champion</title>
+<style>
+:root{--bg:#08051b;--panel:#15102d;--line:#33265b;--gold:#ffd21a;--muted:#b9b2cc;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#05030f;color:var(--white);font-family:Arial,system-ui,sans-serif}
+button,input{font:inherit}.app{max-width:480px;margin:auto;min-height:100vh;background:linear-gradient(160deg,#0b0625,#18013e 55%,#07051b);padding:16px 16px 94px}
+header{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}.logo{width:56px;height:56px}.brand b{font-size:21px}.brand small{display:block;color:var(--gold);margin-top:2px}.bell{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:11px;color:#fff}
+.screen{display:none}.screen.active{display:block}.hero{padding:25px 0 16px}.hero h1{font-size:31px;margin:0 0 5px}.muted{color:var(--muted)}.points{display:flex;justify-content:space-between;align-items:center;background:#17112e;border:1px solid var(--line);padding:13px 15px;border-radius:18px;margin-top:16px}.points strong{color:var(--gold);font-size:22px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile,.card{border:0;border-radius:18px;padding:16px;color:#fff;font-weight:800;text-align:left;box-shadow:0 8px 20px #0005;cursor:pointer}.tile{min-height:100px}.tile .emoji{font-size:27px;display:block;margin-bottom:8px}.yellow{background:#ffc400;color:#171000}.blue{background:#1677ff}.purple{background:#711cff}.green{background:#26c83d}.orange{background:#ff7914}.pink{background:#ed147b}
+.card{margin-top:12px;min-height:92px;background:var(--panel);border:1px solid var(--line)}.card small{display:block;color:var(--muted);font-weight:500;margin-top:7px}
+.title{font-size:25px;margin:22px 0 6px}.back{background:none;border:0;color:var(--gold);padding:0;margin-top:8px;cursor:pointer}.chat{min-height:330px;max-height:50vh;overflow:auto;background:#0e0921;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{padding:11px 13px;border-radius:15px;margin:8px 0;max-width:86%;line-height:1.35}.dc{background:#211641}.me{background:#174e9c;margin-left:auto}.inputrow{display:flex;gap:8px;margin-top:10px}.inputrow input{flex:1;background:#17112e;color:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;outline:none}.send{background:var(--gold);border:0;border-radius:14px;padding:0 17px;font-weight:900}
+.option{width:100%;background:#17112e;border:1px solid var(--line);color:#fff;text-align:left;padding:14px;border-radius:14px;margin:7px 0;cursor:pointer}.score{font-size:18px;color:var(--gold);font-weight:800}.profile{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}.profile input{width:100%;background:#0e0921;color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:8px}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);background:#100b27ee;backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));z-index:10}nav button{background:none;border:0;color:#aaa;font-size:10px;cursor:pointer}nav button.active{color:var(--gold)}nav span{display:block;font-size:21px;margin-bottom:3px}
+#toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#fff;color:#111;padding:12px 17px;border-radius:24px;font-weight:800;display:none;z-index:20;white-space:nowrap;max-width:90%;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><img class="logo" src="icon.svg"><div><b>DC — Danny Champion</b><small>Badilisha Mood Yako.</small></div></div><button class="bell" onclick="toast('🔔 Huna notifications mpya.')">🔔</button></header>
+
+<section id="home" class="screen active">
+<div class="points">🏆 DC Points <strong id="points">120</strong></div>
+<div class="hero"><h1>Hey! 👋</h1><div class="muted">Unajisikiaje leo?</div></div>
+<div class="grid">
+<button class="tile yellow" onclick="mood('😂')"><span class="emoji">😂</span>Nataka kucheka</button>
+<button class="tile blue" onclick="mood('🎮')"><span class="emoji">🎮</span>Nataka kucheza</button>
+<button class="tile purple" onclick="mood('🧠')"><span class="emoji">🧠</span>Nataka challenge</button>
+<button class="tile green" onclick="mood('💪')"><span class="emoji">💪</span>Nahitaji motivation</button>
+<button class="tile orange" onclick="mood('😴')"><span class="emoji">😴</span>Nimeboreka</button>
+<button class="tile pink" onclick="mood('💬')"><span class="emoji">💬</span>Nataka kuongea</button>
+</div>
+<button class="card" onclick="go('friend')">🤖 DC FRIEND<small>Zungumza na DC na pata burudani.</small></button>
+<button class="card" onclick="go('games')">🎮 DC GAMES<small>Cheza quiz na riddles, pata points.</small></button>
+<button class="card" onclick="go('world')">🌍 DC WORLD<small>Angalia score yako na ujenge jina lako.</small></button>
+</section>
+
+<section id="friend" class="screen">
+<button class="back" onclick="go('home')">← Home</button><h2 class="title">🤖 DC Friend</h2><p class="muted">Mwambie DC unavyojisikia.</p>
+<div class="chat" id="chat"><div class="msg dc">DC: Vipi Champion 😎! Leo tunafanya nini—kucheka, challenge au story?</div></div>
+<div class="inputrow"><input id="chatInput" placeholder="Andika ujumbe..." onkeydown="if(event.key==='Enter')sendChat()"><button class="send" onclick="sendChat()">Tuma</button></div>
+</section>
+
+<section id="games" class="screen">
+<button class="back" onclick="go('home')">← Home</button><h2 class="title">🎮 DC Games</h2><p class="muted">Jibu swali na ongeza points.</p>
+<div class="card"><div id="q"></div><div id="answers"></div><div class="score" id="gameScore"></div></div>
+</section>
+
+<section id="world" class="screen">
+<button class="back" onclick="go('home')">← Home</button><h2 class="title">🌍 DC World</h2><p class="muted">Hii ni profile ya prototype yako.</p>
+<div class="profile"><b>🏆 Danny Champion</b><p>DC Points: <strong id="worldPoints">120</strong></p><p>Level: <strong id="level">Champion</strong></p><input id="name" placeholder="Jina lako la kuonekana" onchange="saveName()"></div>
+<button class="card" onclick="toast('🌍 Community itaunganishwa kwenye toleo la online.')">👥 DC Community<small>Share challenges na marafiki.</small></button>
+<button class="card" onclick="toast('⭐ Premium itaongezwa baada ya backend.')">⭐ DC Premium<small>Vipengele vya ziada vitakuja hapa.</small></button>
+</section>
+
+<section id="settings" class="screen">
+<button class="back" onclick="go('home')">← Home</button><h2 class="title">⚙️ Settings</h2>
+<button class="card" onclick="resetApp()">♻️ Anzisha upya points<small>Prototype itarudi kwenye 120 points.</small></button>
+<button class="card" onclick="toast('🔒 Privacy: prototype hii haiombi taarifa nyeti.')">🔒 Privacy<small>Taarifa za prototype huhifadhiwa kwenye simu yako.</small></button>
+</section>
+</div>
+
+<div id="toast"></div>
+<nav>
+<button id="n-home" class="active" onclick="go('home')"><span>⌂</span>Home</button>
+<button id="n-games" onclick="go('games')"><span>🎮</span>Games</button>
+<button id="n-world" onclick="go('world')"><span>🏆</span>Points</button>
+<button id="n-friend" onclick="go('friend')"><span>😊</span>DC Friend</button>
+<button id="n-settings" onclick="go('settings')"><span>⚙️</span>Settings</button>
+</nav>
+
+<script>
+const qs=[{q:'Ni sayari gani tunayoishi?',a:['Mars','Dunia','Jupiter'],c:1},{q:'2 + 5 = ?',a:['6','7','8'],c:1},{q:'Mnyama anayejulikana kama king of the jungle ni?',a:['Simba','Paka','Ng’ombe'],c:0}];
+let gi=0, points=Number(localStorage.dcPoints||120);
+function renderPoints(){document.querySelectorAll('#points,#worldPoints').forEach(x=>x.textContent=points)}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',2300)}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));let n=document.getElementById('n-'+id);if(n)n.classList.add('active');if(id==='games')loadQ();renderPoints()}
+function mood(e){let m={'😂':'😂 DC amesema leo tunacheka! Fungua DC Friend kwa story.','🎮':'🎮 Twende Games! Unaweza kupata points.','🧠':'🧠 Challenge accepted!','💪':'💪 Champion, songa mbele hatua moja kwa wakati.','😴':'😴 Hebu tucheze game moja.','💬':'💬 DC Friend yupo kwa ajili ya story.'};toast(m[e]);if(e==='💬')go('friend');else if(e==='🎮'||e==='😴'||e==='🧠')go('games')}
+function loadQ(){let z=qs[gi%qs.length];document.getElementById('q').innerHTML='<b>'+z.q+'</b>';document.getElementById('answers').innerHTML=z.a.map((a,i)=>`<button class="option" onclick="answer(${i},${z.c})">${a}</button>`).join('');document.getElementById('gameScore').textContent='Points: '+points}
+function answer(i,c){if(i===c){points+=10;toast('🎉 Sahihi! +10 DC Points');}else toast('😄 Karibu! Jaribu lingine.');localStorage.dcPoints=points;gi++;setTimeout(loadQ,500);renderPoints()}
+function sendChat(){let inp=document.getElementById('chatInput'),v=inp.value.trim();if(!v)return;let chat=document.getElementById('chat');chat.innerHTML+=`<div class="msg me">${v.replace(/[<>]/g,'')}</div>`;let r=v.toLowerCase();let reply=r.includes('cheka')?'😂 Haya Champion! Hebu tuanze na challenge ya kuchekesha.':r.includes('stress')||r.includes('choka')?'💛 Pole Champion. Pumzika kidogo, pumua taratibu, kisha tufanye kitu kidogo cha kukufurahisha.':r.includes('game')?'🎮 Twende! Fungua Games upate DC Points.':'😎 Nipo hapa Champion! Chagua: kucheka, game, challenge au motivation.';setTimeout(()=>{chat.innerHTML+=`<div class="msg dc">DC: ${reply}</div>`;chat.scrollTop=chat.scrollHeight},350);inp.value=''}
+function saveName(){localStorage.dcName=document.getElementById('name').value;toast('✅ Jina limehifadhiwa kwenye simu yako.')}
+function resetApp(){points=120;localStorage.dcPoints=120;renderPoints();toast('♻️ Points zimerudi 120.')}
+document.getElementById('name').value=localStorage.dcName||'';renderPoints();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body></html>

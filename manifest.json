@@ -1,0 +1,16 @@
+{
+  "name": "DC — Danny Champion",
+  "short_name": "DC",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#08051b",
+  "theme_color": "#0b0625",
+  "lang": "sw",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
